@@ -1,5 +1,5 @@
 use crate::dap;
-use crate::script::{Peers, ScriptInteraction, DAPScript};
+use crate::script::{DAPScript, Peers, ScriptInteraction};
 use std::fs::OpenOptions;
 use std::io;
 use std::io::{Read, Write};
@@ -48,7 +48,10 @@ fn run_proxy(ide: TcpStream, da: TcpStream, log_script: bool) -> io::Result<()> 
             loop {
                 // ida -> ide
                 match pipe_dap(&mut da, &mut ide, &log_da, Peers::Da) {
-                    Err(_) => break,
+                    Err(_) => {
+                        ide.shutdown(std::net::Shutdown::Both).unwrap();
+                        break;
+                    }
                     _ => (),
                 }
             }
@@ -60,7 +63,10 @@ fn run_proxy(ide: TcpStream, da: TcpStream, log_script: bool) -> io::Result<()> 
         loop {
             // ide -> da
             match pipe_dap(&mut ide, &mut da, &log_ide, Peers::Ide) {
-                Err(_) => break,
+                Err(_) => {
+                    da.shutdown(std::net::Shutdown::Both).unwrap();
+                    break;
+                }
                 _ => (),
             }
         }
