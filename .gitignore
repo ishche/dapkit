@@ -1,6 +1,7 @@
 /target
 node_modules
 out
+**/bin/dapkit
 **/*.rs.bk
 # ignore scripts
 *.dap

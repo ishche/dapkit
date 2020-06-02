@@ -22,6 +22,17 @@
 	},
 	"main": "./out/extension.js",
 	"contributes": {
+		"languages": [
+			{
+				"id": "dapscript",
+				"aliases": [
+					"DAP Script"
+				],
+				"extensions": [
+					"dap"
+				]
+			}
+		],
 		"debuggers": [
 			{
 				"type": "dapkit",
