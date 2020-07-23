@@ -11,7 +11,8 @@
 		"Debuggers"
 	],
 	"activationEvents": [
-		"onDebug"
+		"onDebug",
+		"onCommand:x0a-dapkit.create-with-dap-proxy-launch-configuration"
 	],
 	"repository": {
 		"type": "git",
@@ -34,6 +35,20 @@
 			}
 		],
 		"debuggers": [
+			{
+				"type": "dapkit-proxy",
+				"label": "Run with DAP proxy",
+				"configurationAttributes": {
+					"launch": {
+						"properties": {
+							"params": {
+								"type": "object",
+								"description": "Original launch configuration parameters"
+							}
+						}
+					}
+				}
+			},
 			{
 				"type": "dapkit",
 				"label": "dapkit session",
@@ -69,6 +84,12 @@
 						}
 					}
 				]
+			}
+		],
+		"commands":[
+			{
+				"title": "Create DAP Proxy Launch Configuration",
+				"command": "x0a-dapkit.create-with-dap-proxy-launch-configuration"
 			}
 		]
 	},
