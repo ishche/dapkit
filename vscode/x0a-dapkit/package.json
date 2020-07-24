@@ -12,7 +12,7 @@
 	],
 	"activationEvents": [
 		"onDebug",
-		"onCommand:x0a-dapkit.create-with-dap-proxy-launch-configuration"
+		"onCommand:x0a-dapkit.get-launch-configuration-for-dapkit"
 	],
 	"repository": {
 		"type": "git",
@@ -36,20 +36,6 @@
 		],
 		"debuggers": [
 			{
-				"type": "dapkit-proxy",
-				"label": "Run with DAP proxy",
-				"configurationAttributes": {
-					"launch": {
-						"properties": {
-							"params": {
-								"type": "object",
-								"description": "Original launch configuration parameters"
-							}
-						}
-					}
-				}
-			},
-			{
 				"type": "dapkit",
 				"label": "dapkit session",
 				"osx": {
@@ -61,9 +47,16 @@
 				"linux": {
 					"program": "not ready ./bin/linux.sh"
 				},
+				"variables": {
+					"originalConfiguration": "x0a-dapkit.get-launch-configuration-for-dapkit"
+				},
 				"configurationAttributes": {
 					"launch": {
 						"properties": {
+							"params": {
+								"type": "string",
+								"description": "Original launch configuration parameters"
+							},
 							"script": {
 								"type": "string",
 								"description": "file to use as script for debug adapter",
@@ -74,6 +67,15 @@
 				},
 				"initialConfigurations": [],
 				"configurationSnippets": [
+					{
+						"label": "dapkit: Run with DAP proxy",
+						"body": {
+							"type": "dapkit-proxy",
+							"request": "launch",
+							"name": "dapkit wrapper",
+							"params": "^\"\\${command:originalConfiguration}\""
+						}
+					},
 					{
 						"label": "dapkit: run by script",
 						"body": {
@@ -86,10 +88,10 @@
 				]
 			}
 		],
-		"commands":[
+		"commands": [
 			{
-				"title": "Create DAP Proxy Launch Configuration",
-				"command": "x0a-dapkit.create-with-dap-proxy-launch-configuration"
+				"title": "Get Launch Configuration for DAPKit",
+				"command": "x0a-dapkit.get-launch-configuration-for-dapkit"
 			}
 		]
 	},
@@ -101,11 +103,11 @@
 		"pretest": "yarn run compile && yarn run lint"
 	},
 	"devDependencies": {
-		"@types/node": "^12.11.7",
-		"@types/vscode": "^1.42.0",
-		"@typescript-eslint/eslint-plugin": "^2.18.0",
-		"@typescript-eslint/parser": "^2.18.0",
-		"eslint": "^6.8.0",
-		"typescript": "^3.7.5"
+		"@types/node": "12.11.7",
+		"@types/vscode": "1.42.0",
+		"@typescript-eslint/eslint-plugin": "2.18.0",
+		"@typescript-eslint/parser": "2.18.0",
+		"eslint": "6.8.0",
+		"typescript": "3.7.5"
 	}
 }

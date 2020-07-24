@@ -1,3 +1,6 @@
+use std::fs::File;
+use std::io::prelude::*;
+
 mod dap;
 mod mock;
 mod proxy;
@@ -63,8 +66,9 @@ struct Opts {
 }
 
 fn vscode_main(params: &VSCodeModeParams) -> std::io::Result<()> {
-    println!("vscode {:?}", params);
-    Ok(())
+    let txt = String::from(&params.json);
+    let mut file = File::create("/Users/amagex/projects/dapkit/vscode/x0a-dapkit/bin")?;
+    file.write_all(txt.as_bytes())
 }
 
 fn main() -> std::io::Result<()> {

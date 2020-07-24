@@ -1,8 +1,8 @@
 import * as vscode from 'vscode';
-import { createWithPapProxyLaunchConfiguration } from "./commands";
+import { getLaunchLonfigurationForDapkit } from "./commands";
 
 export function activate(context: vscode.ExtensionContext) {
-    vscode.commands.registerCommand("x0a-dapkit.create-with-dap-proxy-launch-configuration", createWithPapProxyLaunchConfiguration);
+    vscode.commands.registerCommand("x0a-dapkit.get-launch-configuration-for-dapkit", getLaunchLonfigurationForDapkit);
 }
 
 export function deactivate() { }
